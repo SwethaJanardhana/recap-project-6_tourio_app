@@ -1,8 +1,11 @@
 import GlobalStyle from "../styles.js";
 import { SWRConfig } from "swr";
 import Layout from "../components/Layout.js";
+import { useState } from "react";
 
 export default function App({ Component, pageProps }) {
+  const [statusText, setStatusText] = useState();
+
   return (
     <SWRConfig
       value={{
@@ -17,7 +20,11 @@ export default function App({ Component, pageProps }) {
     >
       <Layout>
         <GlobalStyle />
-        <Component {...pageProps} />
+        <Component
+          {...pageProps}
+          statusText={statusText}
+          setStatusText={setStatusText}
+        />
       </Layout>
     </SWRConfig>
   );

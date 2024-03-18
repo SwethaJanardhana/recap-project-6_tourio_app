@@ -40,6 +40,7 @@ export default function Form({ onSubmit, formName, defaultData }) {
         name="name"
         type="text"
         defaultValue={defaultData?.name}
+        required
       />
       <Label htmlFor="image-url">Image Url</Label>
       <Input

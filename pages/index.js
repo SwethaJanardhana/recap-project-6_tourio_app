@@ -22,11 +22,55 @@ const FixedLink = styled(StyledLink)`
   bottom: 50px;
   right: 50px;
 `;
-export default function Home() {
+
+const StyledDiv = styled.div`
+text-align:center;
+color: green;
+font-size:1.5rem;
+font:bold;
+margin:0.5rem;
+padding-top:0.5rem;
+padding-bottom:0.5rem;
+padding-left:0.5rem;
+-webkit-animation: cssAnimation 0s ease-in 1s forwards;
+-webkit-animation-fill-mode: forwards;
+animation-fill-mode: forwards;
+}
+@keyframes cssAnimation {
+to {
+    width:0;
+    height:0;
+    overflow:hidden;
+}
+}
+@-webkit-keyframes cssAnimation {
+to {
+    width:0;
+    height:0;
+    visibility:hidden;
+}
+`;
+
+export default function Home({ statusText }) {
   const { data } = useSWR("/api/places", { fallbackData: [] });
+
+  function displayMessage() {
+    let text = "";
+    if (statusText) {
+      if (statusText.includes("Add")) {
+        text = "Place added successfully.";
+      } else if (statusText.includes("Edit")) {
+        text = "Place updated successfully.";
+      } else if (statusText.includes("Delete")) {
+        text = "Place deleted successfully.";
+      }
+      return text;
+    }
+  }
 
   return (
     <>
+      <StyledDiv>{displayMessage()}</StyledDiv>
       <List role="list">
         {data.map((place) => {
           return (

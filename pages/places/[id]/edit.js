@@ -4,14 +4,13 @@ import useSWR, { mutate } from "swr";
 import Form from "../../../components/Form.js";
 import { StyledLink } from "../../../components/StyledLink.js";
 
-export default function EditPage() {
+export default function EditPage({ setStatusText }) {
   const router = useRouter();
   const { isReady } = router;
   const { id } = router.query;
-  const { data: place, isLoading, error, mutate } = useSWR(`/api/places/${id}`);
+  const { data: place, isLoading, error } = useSWR(`/api/places/${id}`);
 
   async function editPlace(place) {
-    console.log("Place edited (but not really...");
     const response = await fetch(`/api/places/${id}`, {
       method: "PATCH",
       headers: {
@@ -20,6 +19,7 @@ export default function EditPage() {
       body: JSON.stringify(place),
     });
     if (response.ok) {
+      setStatusText("Edit");
       router.push("/");
     }
   }

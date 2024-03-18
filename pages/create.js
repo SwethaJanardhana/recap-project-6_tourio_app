@@ -8,7 +8,7 @@ const StyledBackLink = styled(StyledLink)`
   justify-self: flex-start;
 `;
 
-export default function CreatePlacePage() {
+export default function CreatePlacePage({ setStatusText }) {
   const router = useRouter();
 
   async function addPlace(place) {
@@ -23,6 +23,7 @@ export default function CreatePlacePage() {
     });
 
     if (response.ok) {
+      setStatusText("Added");
       router.push("/");
     }
   }

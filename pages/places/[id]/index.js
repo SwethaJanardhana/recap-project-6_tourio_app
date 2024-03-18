@@ -28,7 +28,7 @@ const StyledLocationLink = styled(StyledLink)`
   border: 3px solid lightsalmon;
 `;
 
-export default function DetailsPage() {
+export default function DetailsPage({ setStatusText }) {
   const router = useRouter();
   const { isReady } = router;
   const { id } = router.query;
@@ -38,12 +38,17 @@ export default function DetailsPage() {
   if (!isReady || isLoading || error) return <h2>Loading...</h2>;
 
   async function deletePlace() {
-    const response = await fetch(`/api/places/${id}`, {
-      method: "DELETE",
-    });
+    const ok = confirm("Are you sure you want to delete the Place?");
 
-    if (response.ok) {
-      router.push("/");
+    if (ok) {
+      const response = await fetch(`/api/places/${id}`, {
+        method: "DELETE",
+      });
+
+      if (response.ok) {
+        setStatusText("Delete");
+        router.push("/");
+      }
     }
   }
 
